@@ -9,11 +9,15 @@
 
 #include "bin_patcher.h"
 #include "cairo_animation.h"
+#include "gdk/gdk.h"
+#include "gio/gio.h"
+#include "glib-object.h"
+#include "gtk/gtkcssprovider.h"
 
 GtkWidget *window;
 GtkWidget *status_bar;
 
-static void check_entered_name(GtkWidget *entry, gpointer data) {
+void check_entered_name(GtkWidget *entry, gpointer data) {
     const gchar *file_path = gtk_entry_get_text(GTK_ENTRY(entry));
 
     int crackme_sz = get_file_sz(file_path);
@@ -46,7 +50,7 @@ static void check_entered_name(GtkWidget *entry, gpointer data) {
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 }
 
-static void on_button_clicked(GtkWidget *widget, gpointer data) {
+void on_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *stack = GTK_WIDGET(data);
     gtk_stack_set_visible_child_name(GTK_STACK(stack), "second_screen");
 }
@@ -55,7 +59,17 @@ int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);
     init_matrix_rain();
 
+    GtkCssProvider *provider = gtk_css_provider_new();
+    const gchar *css_style_file = "./css/style.css";
+    GFile *css_fp               = g_file_new_for_path(css_style_file);
+    GError *error               = 0;
+    gtk_css_provider_load_from_file(provider, css_fp, &error);
+
+
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+    GtkStyleContext *context = gtk_widget_get_style_context(window);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     gtk_window_set_title(GTK_WINDOW(window), "HackVis");
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
@@ -78,8 +92,9 @@ int main(int argc, char *argv[]) {
     gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
 
 
-
     GtkWidget *button = gtk_button_new_with_label("Start hacking");
+    context = gtk_widget_get_style_context(button);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     gtk_widget_set_name(button, "next_button");
     g_signal_connect(button, "clicked", G_CALLBACK(on_button_clicked), stack);
 
@@ -89,16 +104,10 @@ int main(int argc, char *argv[]) {
     gtk_overlay_add_overlay(GTK_OVERLAY(first_screen), box);
     gtk_stack_add_named(GTK_STACK(stack), first_screen, "first_screen");
 
-
-
-
-
-
-
     GtkWidget *second_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_widget_set_name(second_screen, "second_screen");
 
-    GtkWidget *image = gtk_image_new_from_file("imgs/example.png");
+    GtkWidget *image = gtk_image_new_from_file("imgs/kap.png");
 
     GtkWidget *entry = gtk_entry_new();
     status_bar = gtk_statusbar_new();
@@ -109,10 +118,30 @@ int main(int argc, char *argv[]) {
     gtk_box_pack_start(GTK_BOX(second_screen), entry, FALSE, FALSE, 10);
     gtk_box_pack_start(GTK_BOX(second_screen), status_bar, FALSE, FALSE, 10);
 
-
-
     gtk_stack_add_named(GTK_STACK(stack), second_screen, "second_screen");
     gtk_stack_set_visible_child_name(GTK_STACK(stack), "first_screen");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     gtk_widget_show_all(window);
 

@@ -1,0 +1,26 @@
+#window {
+    background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+    opacity: 0;
+    transform: scale(0.8);
+    animation: bounceTop 1s ease-in-out forwards;
+}
+
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+#next_button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#next_button:hover {
+    background-color: #45a049;
+}

@@ -5,7 +5,7 @@ COMMONINC = -I./inc
 SRC = ./src
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST)))) #path to makefile
 INCLUDE_FLAGS = -Iinc
-SRC_FILES = main.cpp src/bin_patcher.cpp src/cairo_animation.cpp
+SRC_FILES = main.cpp src/bin_patcher.cpp src/cairo_animation.cpp src/gtk_gui.cpp
 
 all: build launch
 

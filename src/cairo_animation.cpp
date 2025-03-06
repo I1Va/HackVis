@@ -5,8 +5,12 @@
 
 #include "cairo_animation.h"
 #include "glib.h"
+#include "glibconfig.h"
 
 MatrixDrop drops[NUM_COLUMNS];
+
+static const int SHAKE_POSITIONS[] = {0, -4, 4, -4, 4, -3, 3, -2, 2, 0};
+static const size_t SH_POS_SIZE = sizeof(SHAKE_POSITIONS) / sizeof(int);
 
 void init_matrix_rain() {
     srand(time(NULL));
@@ -47,20 +51,20 @@ gboolean draw_matrix_rain(GtkWidget *widget, cairo_t *cr, gpointer data) {
 }
 
 
-
 gboolean shake_window(gpointer window) {
-    static int shake_positions[] = {0, -5, 5, -5, 5, -3, 3, -2, 2, 0};
-    static int index = 0;
+    static size_t index = 0;
     static int x, y;
 
     if (index == 0) {
         gtk_window_get_position(GTK_WINDOW(window), &x, &y);
+        x += SHAKE_FIX_DELTA;
+        y += SHAKE_FIX_DELTA;
     }
 
-    gtk_window_move(GTK_WINDOW(window), x + shake_positions[index], y);
+    gtk_window_move(GTK_WINDOW(window), x + SHAKE_POSITIONS[index], y);
 
     index++;
-    if (index >= sizeof(shake_positions) / sizeof(shake_positions[0])) {
+    if (index >= SH_POS_SIZE) {
         index = 0;
         return FALSE;
     }

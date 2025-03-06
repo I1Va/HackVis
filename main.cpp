@@ -12,25 +12,26 @@
 
 GtkWidget *window;
 
-
 static void check_entered_name(GtkWidget *entry, gpointer data) {
     const gchar *file_path = gtk_entry_get_text(GTK_ENTRY(entry));
 
     int crackme_sz = get_file_sz(file_path);
     if (crackme_sz < 0) {
         printf("can't open file '%s'\n", file_path);
-        g_timeout_add(50, shake_window, NULL);
+        g_timeout_add(50, shake_window, window);
         return;
     }
 
     FILE *crackme_file_ptr = fopen(file_path, "r");
     if (crackme_file_ptr == NULL) {
         printf("can't open file '%s'\n", file_path);
-        g_timeout_add(50, shake_window, NULL);
+        g_timeout_add(50, shake_window, window);
         return;
     }
 
     proccess_crackme_file(crackme_file_ptr, crackme_sz);
+    fclose(crackme_file_ptr);
+    gtk_entry_set_text(GTK_ENTRY(entry), "");
 }
 
 static void on_button_clicked(GtkWidget *widget, gpointer data) {
@@ -80,10 +81,9 @@ int main(int argc, char *argv[]) {
     GtkWidget *second_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_widget_set_name(second_screen, "second_screen");
 
-    GtkWidget *image = gtk_image_new_from_file("example.png");
+    GtkWidget *image = gtk_image_new_from_file("imgs/example.png");
+
     GtkWidget *entry = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry), "Enter 'kapy'...");
-    gtk_widget_set_name(entry, "text_entry");
 
     g_signal_connect(entry, "activate", G_CALLBACK(check_entered_name), NULL);
 

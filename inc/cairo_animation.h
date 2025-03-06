@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 const size_t NUM_COLUMNS = 50;
+const int SHAKE_FIX_DELTA = 32;
 
 typedef struct {
     int x;

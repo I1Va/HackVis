@@ -27,7 +27,7 @@ unsigned long long get_hash(const char *string, const size_t len) {
     return hash;
 }
 
-bool proccess_crackme_file(FILE *file_ptr, size_t file_sz, parser_err *err) {
+enum proc_crackme_states proccess_crackme_file(FILE *file_ptr, size_t file_sz, parser_err *err) {
     char *byte_file = (char *) calloc(file_sz, sizeof(char));
     if (!byte_file) {
         debug("calloc failed");
@@ -38,16 +38,13 @@ bool proccess_crackme_file(FILE *file_ptr, size_t file_sz, parser_err *err) {
 
     unsigned long long hash = get_hash(byte_file, file_sz);
     if (hash != CRACKME_HASH) {
-        printf("The file selected is not suitable for hacking\n");
-        return false;
+        return WRONG_HASH;
     }
 
     byte_file[PATHED_WORD_ADDR] = 0x3B;
     byte_file[PATHED_WORD_ADDR + 1] = 0xC0;
 
-    FILE *new_file = fopen("crackedfile.com", "wb"); // FIXME:
+    FILE *new_file = fopen("crackedfile.com", "wb");
     size_t count = fwrite(byte_file, sizeof(char), file_sz, new_file);
-
-    printf("HACK IS DONE");
-    return true;
+    return HACK_DONE;
 }

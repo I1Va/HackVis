@@ -15,5 +15,8 @@ build:
 launch:
 	./$(OUT_O_DIR)/main.out
 
+test:
+	$(CC) test.cpp `pkg-config --cflags gtk+-3.0` -o $(OUT_O_DIR)/test.out `pkg-config --libs gtk+-3.0`
+	./$(OUT_O_DIR)/test.out
 
-.PHONY: build
+.PHONY: build test

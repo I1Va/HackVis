@@ -8,6 +8,8 @@
 *.ko
 *.obj
 *.elf
+*.com
+*.COM
 
 # Linker output
 *.ilk

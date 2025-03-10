@@ -69,6 +69,9 @@ int main(int argc, char *argv[]) {
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
+
+
+
     GtkWidget *stack = gtk_stack_new();
     gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT);
     gtk_stack_set_transition_duration(GTK_STACK(stack), 500);
@@ -108,7 +111,7 @@ int main(int argc, char *argv[]) {
     g_signal_connect(entry, "activate", G_CALLBACK(check_entered_name), NULL);
 
     gtk_box_pack_start(GTK_BOX(second_screen), image, TRUE, TRUE, 10);
-    gtk_box_pack_start(GTK_BOX(second_screen), entry, FALSE, FALSE, 10);
+    // gtk_box_pack_start(GTK_BOX(second_screen), entry, FALSE, FALSE, 10);
     gtk_box_pack_start(GTK_BOX(second_screen), status_bar, FALSE, FALSE, 10);
 
     gtk_widget_show_all(window);

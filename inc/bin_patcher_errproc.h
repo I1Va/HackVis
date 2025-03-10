@@ -1,0 +1,10 @@
+#ifndef BIN_PATCHER_ERRPROC
+
+enum parser_err {
+    PARSER_OK = 0,
+    PARSER_FILE_OPEN_ERR = 1,
+    PARSER_CALLOC = 2,
+    PARSER_UNKNOWN_COM_CODE = 3,
+};
+
+#endif // BIN_PATCHER_ERRPROC

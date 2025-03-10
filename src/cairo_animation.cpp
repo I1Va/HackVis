@@ -1,48 +1,46 @@
+#include <cassert>
 #include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #include "cairo_animation.h"
+#include "cairo.h"
 #include "glib.h"
 #include "glibconfig.h"
 
-MatrixDrop drops[NUM_COLUMNS];
+gboolean update_animation(gpointer data) {
+    g_assert(data);
 
-static const int SHAKE_POSITIONS[] = {0, -4, 4, -4, 4, -3, 3, -2, 2, 0};
-static const size_t SH_POS_SIZE = sizeof(SHAKE_POSITIONS) / sizeof(int);
+    matrix_anim_data_t *matrix_anim_data = (matrix_anim_data_t *) data;
 
-void init_matrix_rain() {
-    srand(time(NULL));
     for (int i = 0; i < NUM_COLUMNS; i++) {
-        drops[i].x = i * 10;
-        drops[i].y = rand() % 300;
-        drops[i].speed = (rand() % 5) + 2;
-    }
-}
-
-gboolean update_animation(GtkWidget *widget) {
-    for (int i = 0; i < NUM_COLUMNS; i++) {
-        drops[i].y += drops[i].speed;
-        if (drops[i].y > 300) {
-            drops[i].y = 0;
+        matrix_anim_data->drops[i].y += matrix_anim_data->drops[i].speed;
+        if (matrix_anim_data->drops[i].y > MATRIX_HEIGHT) {
+            matrix_anim_data->drops[i].y = 0;
         }
     }
-    gtk_widget_queue_draw(widget);
+
+    gtk_widget_queue_draw(matrix_anim_data->drawing_area);
     return TRUE;
 }
 
+
 gboolean draw_matrix_rain(GtkWidget *widget, cairo_t *cr, gpointer data) {
-    cairo_set_source_rgb(cr, 0, 0, 0);
+    g_assert(data);
+
+    matrix_anim_data_t *matrix_anim_data = (matrix_anim_data_t *) data;
+
+    cairo_set_source_rgb(cr, MATRIX_BACK_RGB[0], MATRIX_BACK_RGB[1], MATRIX_BACK_RGB[2]);
     cairo_paint(cr);
 
-    cairo_set_source_rgb(cr, 0, 1, 0);
-    cairo_select_font_face(cr, "Monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-    cairo_set_font_size(cr, 14);
+    cairo_set_source_rgb(cr, MATRIX_LET_RGB[0], MATRIX_LET_RGB[1], MATRIX_LET_RGB[2]);
+    cairo_select_font_face(cr, MATRIX_FONT, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+    cairo_set_font_size(cr, MATRIX_FONT_SIZE);
 
     for (int i = 0; i < NUM_COLUMNS; i++) {
-        cairo_move_to(cr, drops[i].x, drops[i].y);
-        char ch = 'A' + (rand() % 26);
+        cairo_move_to(cr, matrix_anim_data->drops[i].x, matrix_anim_data->drops[i].y);
+        char ch = 'A' + (rand() % ENG_LETTERS_CNT);
         char text[] = {ch, '\0'};
         cairo_show_text(cr, text);
     }
@@ -50,8 +48,26 @@ gboolean draw_matrix_rain(GtkWidget *widget, cairo_t *cr, gpointer data) {
     return FALSE;
 }
 
+void init_matrix_anim(matrix_anim_data_t *matrix_anim_data) {
+    g_assert(matrix_anim_data);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < NUM_COLUMNS; i++) {
+        matrix_anim_data->drops[i].x = i * MATRIX_X_SCALE;
+        matrix_anim_data->drops[i].y = rand() % MATRIX_HEIGHT;
+        matrix_anim_data->drops[i].speed = (rand() % MATRIX_MOD_SPEED) + MATRIX_MIN_SPEDD;
+    }
+
+    matrix_anim_data->drawing_area = gtk_drawing_area_new();
+    gtk_widget_set_size_request(matrix_anim_data->drawing_area, MATRIX_WIDTH, MATRIX_HEIGHT);
+    g_signal_connect(G_OBJECT(matrix_anim_data->drawing_area), "draw", G_CALLBACK(draw_matrix_rain), matrix_anim_data);
+    g_timeout_add(MATRIX_RAIN_TIMEOUT, (GSourceFunc) update_animation, matrix_anim_data);
+}
 
 gboolean shake_window(gpointer window) {
+    g_assert(window);
+
     static size_t index = 0;
     static int x, y;
 

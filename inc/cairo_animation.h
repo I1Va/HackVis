@@ -14,7 +14,7 @@ typedef struct {
 
 void init_matrix_rain();
 gboolean update_animation(GtkWidget *widget);
-gboolean draw_matrix_rain(GtkWidget *widget, cairo_t *cr, gpointer data);
+gboolean draw_matrix_rain(GtkWidget *widget,    cairo_t *cr, gpointer data);
 gboolean shake_window(gpointer window);
 
 #endif // CAIRO_ANIMATION_H

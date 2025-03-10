@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "cairo_animation.h"
 #include "cairo.h"
 #include "glib.h"
 #include "glibconfig.h"
+#include "cairo_animation.h"
 
 gboolean update_animation(gpointer data) {
     g_assert(data);
@@ -33,7 +33,6 @@ gboolean draw_matrix_rain(GtkWidget *widget, cairo_t *cr, gpointer data) {
 
     cairo_set_source_rgb(cr, MATRIX_BACK_RGB[0], MATRIX_BACK_RGB[1], MATRIX_BACK_RGB[2]);
     cairo_paint(cr);
-
     cairo_set_source_rgb(cr, MATRIX_LET_RGB[0], MATRIX_LET_RGB[1], MATRIX_LET_RGB[2]);
     cairo_select_font_face(cr, MATRIX_FONT, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
     cairo_set_font_size(cr, MATRIX_FONT_SIZE);

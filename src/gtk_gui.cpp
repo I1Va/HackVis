@@ -62,19 +62,19 @@ void start_dialog_box_create(main_window_t *main_window, enum gtk_err *error) {
     main_window->start_dialog_box.screen = gtk_overlay_new();
     g_object_ref_sink(main_window->start_dialog_box.screen);
 
-    CHECK_REFERENCE(main_window, error, GTK_OVERLAY_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window, error, GTK_OVERLAY_NEW_ERR)
 
     gtk_widget_set_name(main_window->start_dialog_box.screen, "start_dialog_box");
     gtk_stack_add_named(GTK_STACK(main_window->stack), main_window->start_dialog_box.screen, "start_dialog_box");
 
     main_window->start_dialog_box.box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    CHECK_REFERENCE(main_window->start_dialog_box.box, error, GTK_BOX_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->start_dialog_box.box, error, GTK_BOX_NEW_ERR)
 
     gtk_widget_set_halign(main_window->start_dialog_box.box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(main_window->start_dialog_box.box, GTK_ALIGN_CENTER);
 
     main_window->start_dialog_box.button = gtk_button_new_with_label("Start hacking");
-    CHECK_REFERENCE(main_window->start_dialog_box.button, error, GTK_BUTTON_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->start_dialog_box.button, error, GTK_BUTTON_NEW_ERR)
 
     gtk_widget_set_name(main_window->start_dialog_box.button, "next_button");
     g_signal_connect(main_window->start_dialog_box.button, "clicked", G_CALLBACK(on_button_clicked), main_window->stack);
@@ -88,23 +88,23 @@ void start_dialog_box_create(main_window_t *main_window, enum gtk_err *error) {
     gtk_overlay_add_overlay(GTK_OVERLAY(main_window->start_dialog_box.screen), main_window->start_dialog_box.box);
 }
 
-void hacking_box_create(main_window_t *main_window, enum gtk_err *error) {
+void hackvis_hacking_box_create(main_window_t *main_window, enum gtk_err *error) {
     assert(main_window);
 
     main_window->hacking_box.screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, GTK_BOX_PASSING);
-    CHECK_REFERENCE(main_window->hacking_box.screen, error, GTK_BOX_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->hacking_box.screen, error, GTK_BOX_NEW_ERR)
 
     gtk_widget_set_name(main_window->hacking_box.screen, "hacking_box");
     gtk_stack_add_named(GTK_STACK(main_window->stack), main_window->hacking_box.screen, "hacking_box");
 
     main_window->hacking_box.image = gtk_image_new_from_file("imgs/kap.png");
-    CHECK_REFERENCE(main_window->hacking_box.image, error, GTK_IMAGE_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->hacking_box.image, error, GTK_IMAGE_NEW_ERR)
 
     main_window->hacking_box.status_bar = gtk_statusbar_new();
-    CHECK_REFERENCE(main_window->hacking_box.status_bar, error, GTK_STATUSBAR_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->hacking_box.status_bar, error, GTK_STATUSBAR_NEW_ERR)
 
     main_window->hacking_box.entry = gtk_entry_new();
-    CHECK_REFERENCE(main_window->hacking_box.entry, error, GTK_ENTRY_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->hacking_box.entry, error, GTK_ENTRY_NEW_ERR)
 
     g_signal_connect(main_window->hacking_box.entry, "activate", G_CALLBACK(check_entered_name), main_window);
 
@@ -116,26 +116,26 @@ void hacking_box_create(main_window_t *main_window, enum gtk_err *error) {
     gtk_box_pack_start(GTK_BOX(main_window->hacking_box.screen), main_window->hacking_box.status_bar, TRUE, TRUE, GTK_BOX_PASSING);
 }
 
-void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error) {
+void hackvis_main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error) {
     g_assert(main_window);
 
     main_window->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    CHECK_REFERENCE(main_window->window, error, GTK_WINDOW_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->window, error, GTK_WINDOW_NEW_ERR)
 
     main_window->window_width = window_width;
     main_window->window_height = window_height;
 
     main_window->stack = gtk_stack_new();
-    CHECK_REFERENCE(main_window->stack, error, GTK_STACK_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(main_window->stack, error, GTK_STACK_NEW_ERR)
 
     init_matrix_anim(&main_window->matrix_anim_data, error);
-    HANDLE_FUNC_ERROR(error, GTK_INIT_MATRIX_ANIM_ERR)
+    HACKVIS_HANDLE_FUNC_ERROR(error, GTK_INIT_MATRIX_ANIM_ERR)
 
     start_dialog_box_create(main_window, error);
-    HANDLE_FUNC_ERROR(error, GTK_CREATE_start_dialog_box)
+    HACKVIS_HANDLE_FUNC_ERROR(error, GTK_CREATE_START_DIALOG_BOX_ERR)
 
-    hacking_box_create(main_window, error);
-    HANDLE_FUNC_ERROR(error, GTK_CREATE_hacking_box)
+    hackvis_hacking_box_create(main_window, error);
+    HACKVIS_HANDLE_FUNC_ERROR(error, GTK_CREATE_HACKING_BOX)
 
 
     gtk_window_set_title(GTK_WINDOW(main_window->window), "HackVis");

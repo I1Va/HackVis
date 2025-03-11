@@ -62,7 +62,7 @@ void init_matrix_anim(matrix_anim_data_t *matrix_anim_data, enum gtk_err *error=
     }
 
     matrix_anim_data->drawing_area = gtk_drawing_area_new();
-    CHECK_REFERENCE(matrix_anim_data->drawing_area, error, GTK_DRAWING_AREA_NEW_ERR)
+    HACKVIS_CHECK_REFERENCE(matrix_anim_data->drawing_area, error, GTK_DRAWING_AREA_NEW_ERR)
 
     gtk_widget_set_size_request(matrix_anim_data->drawing_area, MATRIX_WIDTH, MATRIX_HEIGHT);
     g_signal_connect(G_OBJECT(matrix_anim_data->drawing_area), "draw", G_CALLBACK(draw_matrix_rain), matrix_anim_data);

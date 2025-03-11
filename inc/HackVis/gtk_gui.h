@@ -35,7 +35,7 @@ struct main_window_t {
 void check_entered_name(GtkWidget *entry, gpointer data);
 void on_button_clicked(GtkWidget *widget, gpointer data);
 void start_dialog_box_create(main_window_t *main_window, enum gtk_err *error=NULL);
-void hacking_box_create(main_window_t *main_window, enum gtk_err *error=NULL);
-void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error=NULL);
+void hackvis_hacking_box_create(main_window_t *main_window, enum gtk_err *error=NULL);
+void hackvis_main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error=NULL);
 
 #endif // GTK_GUI_H

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "HackVis/gtk_error_proc.h"
 
-const char *get_descr(const enum gtk_err *err) {
+const char *hackvis_get_descr(const enum gtk_err *err) {
     #define DESCR_(err) \
     case err:           \
         return #err;    \
@@ -19,8 +19,8 @@ const char *get_descr(const enum gtk_err *err) {
         DESCR_(GTK_DRAWING_AREA_NEW_ERR)
 
         DESCR_(GTK_INIT_MATRIX_ANIM_ERR)
-        DESCR_(GTK_CREATE_start_dialog_box )
-        DESCR_(GTK_CREATE_hacking_box)
+        DESCR_(GTK_CREATE_START_DIALOG_BOX_ERR )
+        DESCR_(GTK_CREATE_HACKING_BOX)
         DESCR_(GTK_CREATE_MAIN_WINDOW_ERR)
         default:
             return "!UNKNOWN ERROR!";

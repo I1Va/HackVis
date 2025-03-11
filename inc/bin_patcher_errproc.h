@@ -1,4 +1,5 @@
 #ifndef BIN_PATCHER_ERRPROC
+#define BIN_PATCHER_ERRPROC
 
 enum parser_err {
     PARSER_OK = 0,

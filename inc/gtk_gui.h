@@ -1,4 +1,5 @@
 #ifndef GTK_GUI_H
+#define GTK_GUI_H
 
 #include <gtk/gtk.h>
 #include "cairo_animation.h"
@@ -31,8 +32,8 @@ struct main_window_t {
 
 void check_entered_name(GtkWidget *entry, gpointer data);
 void on_button_clicked(GtkWidget *widget, gpointer data);
-void first_screen_create(first_screen_t *first_screen, GtkWidget *main_window_stack, GtkWidget *matrix_drawing_area);
-void second_screen_create(main_window_t *main_window);
-void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_heght);
+void first_screen_create(main_window_t *main_window, enum gtk_err *error=NULL);
+void second_screen_create(main_window_t *main_window, enum gtk_err *error=NULL);
+void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_heght, enum gtk_err *error=NULL);
 
 #endif // GTK_GUI_H

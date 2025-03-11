@@ -1,7 +1,9 @@
 #ifndef CAIRO_ANIMATION_H
+#define CAIRO_ANIMATION_H
 
 #include <string.h>
 #include <gtk/gtk.h>
+#include "gtk_error_proc.h"
 
 static const int SHAKE_POSITIONS[] = {0, -4, 4, -4, 4, -3, 3, -2, 2, 0};
 static const size_t SH_POS_SIZE = sizeof(SHAKE_POSITIONS) / sizeof(int);
@@ -31,7 +33,7 @@ struct matrix_anim_data_t {
     GtkWidget *drawing_area;
 };
 
-void init_matrix_anim(matrix_anim_data_t *matrix_anim_data);
+void init_matrix_anim(matrix_anim_data_t *matrix_anim_data, enum gtk_err *error);
 gboolean shake_window(gpointer window);
 
 #endif // CAIRO_ANIMATION_H

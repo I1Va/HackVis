@@ -1,4 +1,5 @@
 #ifndef BIN_PATCHER_H
+#define BIN_PATCHER_H
 
 #include <string.h>
 #include <stdbool.h>

@@ -6,21 +6,21 @@
 
 enum gtk_err
 {
-    GTK_OK                      = 0,
-    GTK_OVERLAY_NEW_ERR         = 1,
-    GTK_BOX_NEW_ERR             = 2,
-    GTK_BUTTON_NEW_ERR          = 3,
-    GTK_IMAGE_NEW_ERR           = 4,
-    GTK_STATUSBAR_NEW_ERR       = 5,
-    GTK_ENTRY_NEW_ERR           = 6,
-    GTK_WINDOW_NEW_ERR          = 7,
-    GTK_STACK_NEW_ERR           = 8,
-    GTK_DRAWING_AREA_NEW_ERR    = 9,
+    GTK_OK                      ,
+    GTK_OVERLAY_NEW_ERR         ,
+    GTK_BOX_NEW_ERR             ,
+    GTK_BUTTON_NEW_ERR          ,
+    GTK_IMAGE_NEW_ERR           ,
+    GTK_STATUSBAR_NEW_ERR       ,
+    GTK_ENTRY_NEW_ERR           ,
+    GTK_WINDOW_NEW_ERR          ,
+    GTK_STACK_NEW_ERR           ,
+    GTK_DRAWING_AREA_NEW_ERR    ,
 
-    GTK_INIT_MATRIX_ANIM_ERR    = 10,
-    GTK_CREATE_FIRST_SCREEN     = 11,
-    GTK_CREATE_SECOND_SCREEN    = 12,
-    GTK_CREATE_MAIN_WINDOW_ERR  = 13,
+    GTK_INIT_MATRIX_ANIM_ERR    ,
+    GTK_CREATE_FIRST_SCREEN     ,
+    GTK_CREATE_SECOND_SCREEN    ,
+    GTK_CREATE_MAIN_WINDOW_ERR  ,
 
 };
 

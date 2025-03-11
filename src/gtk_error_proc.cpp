@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gtk_error_proc.h"
+#include "HackVis/gtk_error_proc.h"
 
 const char *get_descr(const enum gtk_err *err) {
     #define DESCR_(err) \

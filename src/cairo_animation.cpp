@@ -7,7 +7,7 @@
 #include "cairo.h"
 #include "glib.h"
 #include "glibconfig.h"
-#include "cairo_animation.h"
+#include "HackVis/cairo_animation.h"
 
 gboolean update_animation(gpointer data) {
     g_assert(data);

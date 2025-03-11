@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "bin_patcher_errproc.h"
+#include "HackVis/bin_patcher_errproc.h"
 
 const unsigned long long HASH_MULT = 131;
 const unsigned long long CRACKME_HASH = 389332;

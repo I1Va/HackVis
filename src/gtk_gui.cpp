@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "bin_patcher.h"
-#include "gtk_gui.h"
+#include "HackVis/bin_patcher.h"
+#include "HackVis/gtk_gui.h"
 #include "glib-object.h"
 #include "glib.h"
 

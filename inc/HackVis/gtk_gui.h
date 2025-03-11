@@ -2,13 +2,12 @@
 #define GTK_GUI_H
 
 #include <gtk/gtk.h>
-#include "cairo_animation.h"
+#include "HackVis/cairo_animation.h"
 
 const size_t FIR_SEC_ANIM_DURATION = 500;
 const size_t GTK_BOX_PASSING = 10;
 
-struct first_screen_t {
-    GtkWidget *status_bar;
+struct start_screen_t {
     GtkWidget *screen;
     GtkWidget *button;
     GtkWidget *box;
@@ -29,7 +28,7 @@ struct main_window_t {
     GtkWidget *stack;
 
     matrix_anim_data_t matrix_anim_data;
-    first_screen_t     first_screen;
+    start_screen_t     first_screen;
     second_screen_t    second_screen;
 };
 

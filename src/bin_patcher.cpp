@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "general.h"
-#include "bin_patcher.h"
+#include "HackVis/general.h"
+#include "HackVis/bin_patcher.h"
 
 int get_file_sz(const char *const path) {
     struct stat buf = {};

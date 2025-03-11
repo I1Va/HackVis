@@ -4,10 +4,9 @@
 #include <cairo.h>
 #include <stdlib.h>
 #include <stdlib.h>
-#include "general.h"
-#include "glib-object.h"
-#include "gtk_error_proc.h"
-#include "gtk_gui.h"
+#include "HackVis/general.h"
+#include "HackVis/gtk_error_proc.h"
+#include "HackVis/gtk_gui.h"
 
 int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);

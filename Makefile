@@ -1,6 +1,6 @@
 CC = gcc
 
-CDEBFLAGS = -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations \
+CDEBFLAGS = -D_DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations \
 -Wc++14-compat -Wmissing-declarations -Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported \
 -Wconversion -Wctor-dtor-privacy -Wempty-body -Wfloat-equal -Wformat-nonliteral -Wformat-security \
 -Wformat-signedness -Wformat=2 -Winline -Wlogical-op -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual\
@@ -26,7 +26,7 @@ SRC_FILES = main.cpp src/bin_patcher.cpp src/cairo_animation.cpp src/gtk_gui.cpp
 all: build launch
 
 build:
-	@$(CC) $(SRC_FILES) $(INCLUDE_FLAGS) `pkg-config --cflags gtk+-3.0` -o $(OUT_O_DIR)/main.out `pkg-config --libs gtk+-3.0`
+	@$(CC) $(SRC_FILES) $(INCLUDE_FLAGS) -D_DEBUG `pkg-config --cflags gtk+-3.0` -o $(OUT_O_DIR)/main.out `pkg-config --libs gtk+-3.0`
 
 launch:
 	./$(OUT_O_DIR)/main.out

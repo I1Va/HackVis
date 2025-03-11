@@ -20,22 +20,23 @@ enum gtk_err
     GTK_INIT_MATRIX_ANIM_ERR    = 10,
     GTK_CREATE_FIRST_SCREEN     = 11,
     GTK_CREATE_SECOND_SCREEN    = 12,
+    GTK_CREATE_MAIN_WINDOW_ERR  = 13,
 
 };
 
 #define CHECK_REFERENCE(ref, err_ref, err_code) \
     if (err_ref && ref == NULL) {               \
-        debug("error: %s", get_descr(error))    \
-        *err_ref = err_code;                    \
+        *err_ref = (gtk_err) err_code;          \
+        debug("error: %s", get_descr(err_ref)); \
         return;                                 \
     }                                           \
 
 #define HANDLE_FUNC_ERROR(err_ref, err_code)    \
     if (err_ref && *err_ref != GTK_OK) {        \
-        debug("error: %s", get_descr(error));   \
+        debug("error: %s", get_descr(err_ref));   \
         return;                                 \
     }                                           \
 
-const char *get_descr(const enum gtk_err err);
+const char *get_descr(const enum gtk_err *err);
 
 #endif // GTK_ERROR_PROC_H

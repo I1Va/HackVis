@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include "gtk_error_proc.h"
 
-const char *get_descr(const enum gtk_err err) {
+const char *get_descr(const enum gtk_err *err) {
     #define DESCR_(err) \
     case err:           \
         return #err;    \
 
-    switch (err) {
+    switch (*err) {
         DESCR_(GTK_OK                  )
         DESCR_(GTK_OVERLAY_NEW_ERR     )
         DESCR_(GTK_BOX_NEW_ERR         )
@@ -21,9 +21,11 @@ const char *get_descr(const enum gtk_err err) {
         DESCR_(GTK_INIT_MATRIX_ANIM_ERR)
         DESCR_(GTK_CREATE_FIRST_SCREEN )
         DESCR_(GTK_CREATE_SECOND_SCREEN)
+        DESCR_(GTK_CREATE_MAIN_WINDOW_ERR)
+        default:
+            return "!UNKNOWN ERROR!";
+            break;
     }
-
-    return "!UNKNOWN ERROR!";
 }
 
 #undef DESCR_

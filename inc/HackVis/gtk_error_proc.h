@@ -18,8 +18,8 @@ enum gtk_err
     GTK_DRAWING_AREA_NEW_ERR    ,
 
     GTK_INIT_MATRIX_ANIM_ERR    ,
-    GTK_CREATE_FIRST_SCREEN     ,
-    GTK_CREATE_SECOND_SCREEN    ,
+    GTK_CREATE_start_dialog_box     ,
+    GTK_CREATE_hacking_box    ,
     GTK_CREATE_MAIN_WINDOW_ERR  ,
 
 };

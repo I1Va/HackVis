@@ -19,8 +19,8 @@ const char *get_descr(const enum gtk_err *err) {
         DESCR_(GTK_DRAWING_AREA_NEW_ERR)
 
         DESCR_(GTK_INIT_MATRIX_ANIM_ERR)
-        DESCR_(GTK_CREATE_FIRST_SCREEN )
-        DESCR_(GTK_CREATE_SECOND_SCREEN)
+        DESCR_(GTK_CREATE_start_dialog_box )
+        DESCR_(GTK_CREATE_hacking_box)
         DESCR_(GTK_CREATE_MAIN_WINDOW_ERR)
         default:
             return "!UNKNOWN ERROR!";

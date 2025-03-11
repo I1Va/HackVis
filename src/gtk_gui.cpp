@@ -23,7 +23,7 @@ void check_entered_name(GtkWidget *entry, gpointer data) {
 
     int crackme_sz = get_file_sz(file_path);
     if (crackme_sz < 0) {
-        gtk_statusbar_push(GTK_STATUSBAR(main_window->second_screen.status_bar), GPOINTER_TO_INT(data), "can't open file");
+        gtk_statusbar_push(GTK_STATUSBAR(main_window->hacking_box.status_bar), GPOINTER_TO_INT(data), "can't open file");
         printf("can't open file '%s'\n", file_path);
         g_timeout_add(50, shake_window, main_window->window);
         return;
@@ -32,7 +32,7 @@ void check_entered_name(GtkWidget *entry, gpointer data) {
     FILE *crackme_file_ptr = fopen(file_path, "r");
     if (crackme_file_ptr == NULL) {
         printf("can't open file '%s'\n", file_path);
-        gtk_statusbar_push( GTK_STATUSBAR(main_window->second_screen.status_bar), GPOINTER_TO_INT(data), "can't open file");
+        gtk_statusbar_push( GTK_STATUSBAR(main_window->hacking_box.status_bar), GPOINTER_TO_INT(data), "can't open file");
         g_timeout_add(50, shake_window, main_window->window);
         return;
     }
@@ -40,10 +40,10 @@ void check_entered_name(GtkWidget *entry, gpointer data) {
     enum proc_crackme_states hack_res = proccess_crackme_file(crackme_file_ptr, crackme_sz);
     switch (hack_res) {
         case WRONG_HASH:
-            gtk_statusbar_push( GTK_STATUSBAR(main_window->second_screen.status_bar), GPOINTER_TO_INT(data), "the file is not suitable for hacking");
+            gtk_statusbar_push( GTK_STATUSBAR(main_window->hacking_box.status_bar), GPOINTER_TO_INT(data), "the file is not suitable for hacking");
             break;
         case HACK_DONE:
-            gtk_statusbar_push( GTK_STATUSBAR(main_window->second_screen.status_bar), GPOINTER_TO_INT(data), "HACK IS DONE: crackedfile.com was created");
+            gtk_statusbar_push( GTK_STATUSBAR(main_window->hacking_box.status_bar), GPOINTER_TO_INT(data), "HACK IS DONE: crackedfile.com was created");
             break;
     }
 
@@ -53,67 +53,67 @@ void check_entered_name(GtkWidget *entry, gpointer data) {
 
 void on_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *stack = GTK_WIDGET(data);
-    gtk_stack_set_visible_child_name(GTK_STACK(stack), "second_screen");
+    gtk_stack_set_visible_child_name(GTK_STACK(stack), "hacking_box");
 }
 
-void first_screen_create(main_window_t *main_window, enum gtk_err *error) {
+void start_dialog_box_create(main_window_t *main_window, enum gtk_err *error) {
     assert(main_window);
 
-    main_window->first_screen.screen = gtk_overlay_new();
-    g_object_ref_sink(main_window->first_screen.screen);
+    main_window->start_dialog_box.screen = gtk_overlay_new();
+    g_object_ref_sink(main_window->start_dialog_box.screen);
 
     CHECK_REFERENCE(main_window, error, GTK_OVERLAY_NEW_ERR)
 
-    gtk_widget_set_name(main_window->first_screen.screen, "first_screen");
-    gtk_stack_add_named(GTK_STACK(main_window->stack), main_window->first_screen.screen, "first_screen");
+    gtk_widget_set_name(main_window->start_dialog_box.screen, "start_dialog_box");
+    gtk_stack_add_named(GTK_STACK(main_window->stack), main_window->start_dialog_box.screen, "start_dialog_box");
 
-    main_window->first_screen.box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    CHECK_REFERENCE(main_window->first_screen.box, error, GTK_BOX_NEW_ERR)
+    main_window->start_dialog_box.box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    CHECK_REFERENCE(main_window->start_dialog_box.box, error, GTK_BOX_NEW_ERR)
 
-    gtk_widget_set_halign(main_window->first_screen.box, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(main_window->first_screen.box, GTK_ALIGN_CENTER);
+    gtk_widget_set_halign(main_window->start_dialog_box.box, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(main_window->start_dialog_box.box, GTK_ALIGN_CENTER);
 
-    main_window->first_screen.button = gtk_button_new_with_label("Start hacking");
-    CHECK_REFERENCE(main_window->first_screen.button, error, GTK_BUTTON_NEW_ERR)
+    main_window->start_dialog_box.button = gtk_button_new_with_label("Start hacking");
+    CHECK_REFERENCE(main_window->start_dialog_box.button, error, GTK_BUTTON_NEW_ERR)
 
-    gtk_widget_set_name(main_window->first_screen.button, "next_button");
-    g_signal_connect(main_window->first_screen.button, "clicked", G_CALLBACK(on_button_clicked), main_window->stack);
+    gtk_widget_set_name(main_window->start_dialog_box.button, "next_button");
+    g_signal_connect(main_window->start_dialog_box.button, "clicked", G_CALLBACK(on_button_clicked), main_window->stack);
 
-    g_object_ref_sink(main_window->first_screen.button);
+    g_object_ref_sink(main_window->start_dialog_box.button);
     g_object_ref_sink(main_window->matrix_anim_data.drawing_area);
-    g_object_ref_sink(main_window->first_screen.box);
+    g_object_ref_sink(main_window->start_dialog_box.box);
 
-    gtk_box_pack_start(GTK_BOX(main_window->first_screen.box), main_window->first_screen.button, FALSE, FALSE, 10);
-    gtk_overlay_add_overlay(GTK_OVERLAY(main_window->first_screen.screen), main_window->matrix_anim_data.drawing_area);
-    gtk_overlay_add_overlay(GTK_OVERLAY(main_window->first_screen.screen), main_window->first_screen.box);
+    gtk_box_pack_start(GTK_BOX(main_window->start_dialog_box.box), main_window->start_dialog_box.button, FALSE, FALSE, 10);
+    gtk_overlay_add_overlay(GTK_OVERLAY(main_window->start_dialog_box.screen), main_window->matrix_anim_data.drawing_area);
+    gtk_overlay_add_overlay(GTK_OVERLAY(main_window->start_dialog_box.screen), main_window->start_dialog_box.box);
 }
 
-void second_screen_create(main_window_t *main_window, enum gtk_err *error) {
+void hacking_box_create(main_window_t *main_window, enum gtk_err *error) {
     assert(main_window);
 
-    main_window->second_screen.screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, GTK_BOX_PASSING);
-    CHECK_REFERENCE(main_window->second_screen.screen, error, GTK_BOX_NEW_ERR)
+    main_window->hacking_box.screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, GTK_BOX_PASSING);
+    CHECK_REFERENCE(main_window->hacking_box.screen, error, GTK_BOX_NEW_ERR)
 
-    gtk_widget_set_name(main_window->second_screen.screen, "second_screen");
-    gtk_stack_add_named(GTK_STACK(main_window->stack), main_window->second_screen.screen, "second_screen");
+    gtk_widget_set_name(main_window->hacking_box.screen, "hacking_box");
+    gtk_stack_add_named(GTK_STACK(main_window->stack), main_window->hacking_box.screen, "hacking_box");
 
-    main_window->second_screen.image = gtk_image_new_from_file("imgs/kap.png");
-    CHECK_REFERENCE(main_window->second_screen.image, error, GTK_IMAGE_NEW_ERR)
+    main_window->hacking_box.image = gtk_image_new_from_file("imgs/kap.png");
+    CHECK_REFERENCE(main_window->hacking_box.image, error, GTK_IMAGE_NEW_ERR)
 
-    main_window->second_screen.status_bar = gtk_statusbar_new();
-    CHECK_REFERENCE(main_window->second_screen.status_bar, error, GTK_STATUSBAR_NEW_ERR)
+    main_window->hacking_box.status_bar = gtk_statusbar_new();
+    CHECK_REFERENCE(main_window->hacking_box.status_bar, error, GTK_STATUSBAR_NEW_ERR)
 
-    main_window->second_screen.entry = gtk_entry_new();
-    CHECK_REFERENCE(main_window->second_screen.entry, error, GTK_ENTRY_NEW_ERR)
+    main_window->hacking_box.entry = gtk_entry_new();
+    CHECK_REFERENCE(main_window->hacking_box.entry, error, GTK_ENTRY_NEW_ERR)
 
-    g_signal_connect(main_window->second_screen.entry, "activate", G_CALLBACK(check_entered_name), main_window);
+    g_signal_connect(main_window->hacking_box.entry, "activate", G_CALLBACK(check_entered_name), main_window);
 
-    g_object_ref_sink(main_window->second_screen.image);
-    g_object_ref_sink(main_window->second_screen.entry);
-    g_object_ref_sink(main_window->second_screen.status_bar);
-    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.image, FALSE, FALSE, GTK_BOX_PASSING);
-    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.entry, FALSE, FALSE, GTK_BOX_PASSING);
-    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.status_bar, TRUE, TRUE, GTK_BOX_PASSING);
+    g_object_ref_sink(main_window->hacking_box.image);
+    g_object_ref_sink(main_window->hacking_box.entry);
+    g_object_ref_sink(main_window->hacking_box.status_bar);
+    gtk_box_pack_start(GTK_BOX(main_window->hacking_box.screen), main_window->hacking_box.image, FALSE, FALSE, GTK_BOX_PASSING);
+    gtk_box_pack_start(GTK_BOX(main_window->hacking_box.screen), main_window->hacking_box.entry, FALSE, FALSE, GTK_BOX_PASSING);
+    gtk_box_pack_start(GTK_BOX(main_window->hacking_box.screen), main_window->hacking_box.status_bar, TRUE, TRUE, GTK_BOX_PASSING);
 }
 
 void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error) {
@@ -131,11 +131,11 @@ void main_window_create(main_window_t *main_window,  const size_t window_width, 
     init_matrix_anim(&main_window->matrix_anim_data, error);
     HANDLE_FUNC_ERROR(error, GTK_INIT_MATRIX_ANIM_ERR)
 
-    first_screen_create(main_window, error);
-    HANDLE_FUNC_ERROR(error, GTK_CREATE_FIRST_SCREEN)
+    start_dialog_box_create(main_window, error);
+    HANDLE_FUNC_ERROR(error, GTK_CREATE_start_dialog_box)
 
-    second_screen_create(main_window, error);
-    HANDLE_FUNC_ERROR(error, GTK_CREATE_SECOND_SCREEN)
+    hacking_box_create(main_window, error);
+    HANDLE_FUNC_ERROR(error, GTK_CREATE_hacking_box)
 
 
     gtk_window_set_title(GTK_WINDOW(main_window->window), "HackVis");

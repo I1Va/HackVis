@@ -41,8 +41,8 @@ enum proc_crackme_states proccess_crackme_file(FILE *file_ptr, size_t file_sz, p
         return WRONG_HASH;
     }
 
-    byte_file[PATHED_WORD_ADDR] = 0x3B;
-    byte_file[PATHED_WORD_ADDR + 1] = 0xC0;
+    byte_file[PATHED_WORD_ADDR] = 0x3B;     // cmp ax ax
+    byte_file[PATHED_WORD_ADDR + 1] = 0xC0; //
 
     FILE *new_file = fopen("crackedfile.com", "wb");
     size_t count = fwrite(byte_file, sizeof(char), file_sz, new_file);

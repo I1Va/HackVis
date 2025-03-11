@@ -4,6 +4,9 @@
 #include <gtk/gtk.h>
 #include "cairo_animation.h"
 
+const size_t FIR_SEC_ANIM_DURATION = 500;
+const size_t GTK_BOX_PASSING = 10;
+
 struct first_screen_t {
     GtkWidget *status_bar;
     GtkWidget *screen;
@@ -21,7 +24,7 @@ struct second_screen_t {
 struct main_window_t {
     GtkWidget *window;
     size_t window_width;
-    size_t window_heght;
+    size_t window_height;
 
     GtkWidget *stack;
 
@@ -34,6 +37,6 @@ void check_entered_name(GtkWidget *entry, gpointer data);
 void on_button_clicked(GtkWidget *widget, gpointer data);
 void first_screen_create(main_window_t *main_window, enum gtk_err *error=NULL);
 void second_screen_create(main_window_t *main_window, enum gtk_err *error=NULL);
-void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_heght, enum gtk_err *error=NULL);
+void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error=NULL);
 
 #endif // GTK_GUI_H

@@ -87,7 +87,7 @@ void second_screen_create(main_window_t *main_window, enum gtk_err *error) {
     assert(main_window);
     ;
 
-    main_window->second_screen.screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    main_window->second_screen.screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, GTK_BOX_PASSING);
     CHECK_REFERENCE(main_window->second_screen.screen, error, GTK_BOX_NEW_ERR)
 
     gtk_widget_set_name(main_window->second_screen.screen, "second_screen");
@@ -104,19 +104,19 @@ void second_screen_create(main_window_t *main_window, enum gtk_err *error) {
 
     g_signal_connect(main_window->second_screen.entry, "activate", G_CALLBACK(check_entered_name), main_window);
 
-    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.image, FALSE, FALSE, 10);
-    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.entry, FALSE, FALSE, 10);
-    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.status_bar, TRUE, TRUE, 10);
+    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.image, FALSE, FALSE, GTK_BOX_PASSING);
+    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.entry, FALSE, FALSE, GTK_BOX_PASSING);
+    gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.status_bar, TRUE, TRUE, GTK_BOX_PASSING);
 }
 
-void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_heght, enum gtk_err *error) {
+void main_window_create(main_window_t *main_window,  const size_t window_width, const size_t window_height, enum gtk_err *error) {
     g_assert(main_window);
 
     main_window->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     CHECK_REFERENCE(main_window->window, error, GTK_WINDOW_NEW_ERR)
 
     main_window->window_width = window_width;
-    main_window->window_heght = window_heght;
+    main_window->window_height = window_height;
 
     main_window->stack = gtk_stack_new();
     CHECK_REFERENCE(main_window->stack, error, GTK_STACK_NEW_ERR)
@@ -132,11 +132,11 @@ void main_window_create(main_window_t *main_window,  const size_t window_width, 
 
 
     gtk_window_set_title(GTK_WINDOW(main_window->window), "HackVis");
-    gtk_window_set_default_size(GTK_WINDOW(main_window->window), 400, 300);
+    gtk_window_set_default_size(GTK_WINDOW(main_window->window), window_width, window_height);
     g_signal_connect(main_window->window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     gtk_stack_set_transition_type(GTK_STACK(main_window->stack), GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT);
-    gtk_stack_set_transition_duration(GTK_STACK(main_window->stack), 500);
+    gtk_stack_set_transition_duration(GTK_STACK(main_window->stack), FIR_SEC_ANIM_DURATION);
     gtk_container_add(GTK_CONTAINER(main_window->window), main_window->stack);
 }
 

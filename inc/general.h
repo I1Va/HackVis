@@ -9,17 +9,6 @@
         free(ptr); ptr = NULL; \
     } while(0);
 
-
-/*
-#define FREE(ptr)                \
-    ({                           \
-        typeof(ptr) ptr__ = ptr; \
-        free(ptr);               \
-        ptr = NULL;              \
-        ptr__                    \
-    })
-*/
-
 enum RETURN_STATES {
     ReturnErrOR  = -1,
     RETURN_FALSE =  0,
@@ -31,7 +20,7 @@ enum RETURN_STATES {
 #define RED "\e[0;31m"
 #define YEL "\e[0;33m"
 
-#define printf_red(str_, ...) printf(RED str_ WHT, ##__VA_ARGS__) // TODO: дефайны КАПСОМ
+#define printf_red(str_, ...) printf(RED str_ WHT, ##__VA_ARGS__)
 #define printf_wht(str_, ...) printf(WHT str_ WHT, ##__VA_ARGS__)
 #define printf_grn(str_, ...) printf(GRN str_ WHT, ##__VA_ARGS__)
 #define printf_yel(str_, ...) printf(YEL str_ WHT, ##__VA_ARGS__)

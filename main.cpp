@@ -1,7 +1,5 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
-#include <stdlib.h>
-#include <stdlib.h>
 
 #include "HackVis/general.h"
 #include "HackVis/gtk_error_proc.h"

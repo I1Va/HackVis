@@ -2,10 +2,8 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
 #include <time.h>
-#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "HackVis/bin_patcher.h"

@@ -26,7 +26,7 @@ SRC_FILES = main.cpp src/bin_patcher.cpp src/cairo_animation.cpp src/gtk_gui.cpp
 all: build launch
 
 build:
-	@$(CC) $(SRC_FILES) $(INCLUDE_FLAGS) -D_DEBUG `pkg-config --cflags gtk+-3.0` -o $(OUT_O_DIR)/main.out `pkg-config --libs gtk+-3.0`
+	@$(CC) $(SRC_FILES) $(INCLUDE_FLAGS) -D_DEBUG $(SANITIZER_FLAGS) `pkg-config --cflags gtk+-3.0` -o $(OUT_O_DIR)/main.out `pkg-config --libs gtk+-3.0`
 
 launch:
 	./$(OUT_O_DIR)/main.out

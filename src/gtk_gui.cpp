@@ -58,9 +58,10 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
 
 void first_screen_create(main_window_t *main_window, enum gtk_err *error) {
     assert(main_window);
-    ;
 
     main_window->first_screen.screen = gtk_overlay_new();
+    g_object_ref_sink(main_window->first_screen.screen);
+
     CHECK_REFERENCE(main_window, error, GTK_OVERLAY_NEW_ERR)
 
     gtk_widget_set_name(main_window->first_screen.screen, "first_screen");
@@ -78,6 +79,10 @@ void first_screen_create(main_window_t *main_window, enum gtk_err *error) {
     gtk_widget_set_name(main_window->first_screen.button, "next_button");
     g_signal_connect(main_window->first_screen.button, "clicked", G_CALLBACK(on_button_clicked), main_window->stack);
 
+    g_object_ref_sink(main_window->first_screen.button);
+    g_object_ref_sink(main_window->matrix_anim_data.drawing_area);
+    g_object_ref_sink(main_window->first_screen.box);
+
     gtk_box_pack_start(GTK_BOX(main_window->first_screen.box), main_window->first_screen.button, FALSE, FALSE, 10);
     gtk_overlay_add_overlay(GTK_OVERLAY(main_window->first_screen.screen), main_window->matrix_anim_data.drawing_area);
     gtk_overlay_add_overlay(GTK_OVERLAY(main_window->first_screen.screen), main_window->first_screen.box);
@@ -85,7 +90,6 @@ void first_screen_create(main_window_t *main_window, enum gtk_err *error) {
 
 void second_screen_create(main_window_t *main_window, enum gtk_err *error) {
     assert(main_window);
-    ;
 
     main_window->second_screen.screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, GTK_BOX_PASSING);
     CHECK_REFERENCE(main_window->second_screen.screen, error, GTK_BOX_NEW_ERR)
@@ -104,6 +108,9 @@ void second_screen_create(main_window_t *main_window, enum gtk_err *error) {
 
     g_signal_connect(main_window->second_screen.entry, "activate", G_CALLBACK(check_entered_name), main_window);
 
+    g_object_ref_sink(main_window->second_screen.image);
+    g_object_ref_sink(main_window->second_screen.entry);
+    g_object_ref_sink(main_window->second_screen.status_bar);
     gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.image, FALSE, FALSE, GTK_BOX_PASSING);
     gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.entry, FALSE, FALSE, GTK_BOX_PASSING);
     gtk_box_pack_start(GTK_BOX(main_window->second_screen.screen), main_window->second_screen.status_bar, TRUE, TRUE, GTK_BOX_PASSING);
@@ -137,6 +144,7 @@ void main_window_create(main_window_t *main_window,  const size_t window_width, 
 
     gtk_stack_set_transition_type(GTK_STACK(main_window->stack), GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT);
     gtk_stack_set_transition_duration(GTK_STACK(main_window->stack), FIR_SEC_ANIM_DURATION);
+
+    g_object_ref_sink(main_window->window);
     gtk_container_add(GTK_CONTAINER(main_window->window), main_window->stack);
 }
-
